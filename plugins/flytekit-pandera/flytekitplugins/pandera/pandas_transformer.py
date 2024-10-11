@@ -100,7 +100,11 @@ class PanderaPandasTransformer(TypeTransformer[pandera.typing.DataFrame]):
                 Deck(renderer._title, html)
             else:
                 raise ValueError(f"Invalid on_error value: {config.on_error}")
+            html = renderer.to_html(python_val, schema, exc)
             val = python_val
+        else:
+            html = renderer.to_html(val, schema)
+        Deck(renderer._title, html)
 
         lv = self._sd_transformer.to_literal(ctx, val, pandas.DataFrame, expected)
 
@@ -136,7 +140,12 @@ class PanderaPandasTransformer(TypeTransformer[pandera.typing.DataFrame]):
                 Deck(renderer._title, html)
             else:
                 raise ValueError(f"Invalid on_error value: {config.on_error}")
+            html = renderer.to_html(df, schema, exc)
             val = df
+        else:
+            html = renderer.to_html(val, schema)
+
+        Deck(renderer._title, html)
 
         return val
 
